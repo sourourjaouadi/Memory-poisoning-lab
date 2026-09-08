@@ -1,0 +1,11 @@
+# Pinned dependencies for Memory Poisoning Lab (Phase 0)
+# Pinned embedding model: all-MiniLM-L6-v2 (384-dimensional dense vectors via ONNX / ChromaDB)
+chromadb==1.5.9
+onnxruntime==1.29.0
+tokenizers==0.23.2
+pydantic==2.13.5
+structlog==26.1.0
+python-dotenv==1.2.3
+openai==3.8.0
+anthropic==1.4.0
+pytest==9.1.1

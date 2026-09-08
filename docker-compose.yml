@@ -1,0 +1,25 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: memory_poisoning_agent
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - MODEL_PROVIDER=${MODEL_PROVIDER:-mock}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-3-5-sonnet-20241022}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434/v1}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
+      - DATA_DIR=/app/data
+      - LOGS_DIR=/app/logs
+      - SQLITE_DB_PATH=/app/data/memory.db
+      - CHROMA_PERSIST_DIR=/app/data/chroma
+      - EMBEDDING_MODEL_NAME=all-MiniLM-L6-v2
+    command: python main.py --session-id docker_session
