@@ -158,10 +158,10 @@ class ChromaVectorStore:
         return self._query_exact(where={"customer_id": customer_id}, limit=limit)
 
     def _query_exact(self, where: Dict[str, Any], limit: int = 20) -> List[SemanticMemoryItem]:
-        """Internal helper for exact metadata matching."""
+        """Internal helper for exact metadata matching with recency ordering."""
+        # Retrieve all matching entries without applying the limit; we'll sort and slice later.
         results = self.collection.get(
             where=where,
-            limit=limit,
             include=["documents", "metadatas"],
         )
 
@@ -177,7 +177,6 @@ class ChromaVectorStore:
                     extra_meta = json.loads(meta["extra_metadata_json"])
                 except Exception:
                     extra_meta = {}
-
             prov = Provenance(
                 source=str(meta.get("source", "unknown")),
                 timestamp=str(meta.get("timestamp", "")),
@@ -189,7 +188,11 @@ class ChromaVectorStore:
             )
             items.append(SemanticMemoryItem(id=entry_id, content=doc, provenance=prov))
 
-        return items
+        # Sort by timestamp descending (ISO‑8601 strings sort correctly)
+        items.sort(key=lambda x: x.provenance.timestamp, reverse=True)
+
+        # Apply the requested limit
+        return items[:limit]
 
     def search_semantic(
         self,
