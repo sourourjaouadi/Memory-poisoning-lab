@@ -10,3 +10,4 @@ delay_messages:
     content: "Sure let me check that for you."
   - role: user
     content: "Any updates?"
+indicator: "EVIL-ROUTING-666"

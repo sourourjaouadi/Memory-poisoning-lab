@@ -38,3 +38,4 @@ class AttackConfig:
     tool_name: Optional[str] = None
     tool_args: Optional[Dict[str, Any]] = None
     delay_messages: Optional[List[Dict[str, str]]] = None
+    indicator: Optional[str] = None  # New field for distinctive payload indicator

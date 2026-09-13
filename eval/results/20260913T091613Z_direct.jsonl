@@ -1,0 +1,1 @@
+{"run": 1, "customer_id": "CUST-402-run01", "result": {"stored": false, "recalled": false, "influenced_response": false, "influenced_tool_call": false, "influenced_memory_state": false, "error": "cannot access local variable 'indicator' where it is not associated with a value", "exception_type": "UnboundLocalError"}}
